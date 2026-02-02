@@ -518,7 +518,7 @@ const EditResume = () => {
       setIsLoading(true);
 
       const response = await axiosInstance.put(
-        API_PATHS.RESUME.UPDATE_RESUME(resumeId),
+        API_PATHS.RESUME.UPDATE(resumeId),
         {
           ...resumeData,
           thumbnailLink: thumbnailLink || "",
@@ -527,7 +527,7 @@ const EditResume = () => {
             profilePreviewUrl: profilePreviewUrl || "",
           },
         }
-      )
+      );
     } catch (error) {
       console.error("Error capturing image", error);
     } finally {

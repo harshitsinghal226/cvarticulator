@@ -87,7 +87,8 @@ export const fixTailwindColors = (element) => {
     const style = window.getComputedStyle(el);
 
     ["color", "backgroundColor", "borderColor"].forEach((prop) => {
-      if (style[prop].includes("oklch")) {
+      const value = style[prop];
+      if (value.includes("oklch")) {
         el.style[prop] = "#000"; // or any safe fallback
       }
     });
