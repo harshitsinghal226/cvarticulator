@@ -1,7 +1,7 @@
 import React from "react";
 import Input from "../../../components/Inputs/Input";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
-import RatingInput from "../../../components/ResumeSelections/RatingInput";
+import RatingInput from "../../../components/ResumeSections/RatingInput";
 
 const SkillsInfoForm = ({
   skillsInfo,

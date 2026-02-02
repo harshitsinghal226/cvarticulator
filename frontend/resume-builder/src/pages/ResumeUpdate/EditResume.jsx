@@ -24,6 +24,7 @@ import ProjectsDetailForm from "./Forms/ProjectsDetailForm";
 import CertificationInfoForm from "./Forms/CertificationInfoForm";
 import AdditionalInfoForm from "./Forms/AdditionalInfoForm";
 import RenderResume from "../../components/ResumeTemplates/RenderResume";
+import { captureElementAsImage, dataURLtoFile, fixTailwindColors } from "../../utils/helper";
 
 const EditResume = () => {
   const { resumeId } = useParams();
@@ -470,9 +471,69 @@ const EditResume = () => {
   };
 
   //upload thumbnail and resume profile img
-  const uploadResumeImages = async () => {};
+  const uploadResumeImages = async () => {
+    try {
+      setIsLoading(true);
 
-  const updateResumeDetails = async (thumbnailLink, profilePreviewUrl) => {};
+      fixTailwindColors(resumeRef.current);
+      const imageDataUrl = await captureElementAsImage(resumeRef.current);
+
+      // Convert base64 to file
+      const thumbnailFile = dataURLtoFile(
+        imageDataUrl,
+        `resume-${resumeId}.png`
+      );
+
+      const profileImageFile = resumeData?.profileInfo?.profileImg || null;
+
+      const formData = new FormData();
+      if(profileImageFile) formData.append("profileImg", profileImageFile);
+      if(thumbnailFile) formData.append("thumbnail", thumbnailFile);
+
+      const uploadResponse = await axiosInstance.put(
+        API_PATHS.RESUME.UPLOAD_IMAGES(resumeId),
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } },
+      );
+
+      const { thumbnailLink, profilePreviewUrl } = uploadResponse.data;
+
+      console.log("RESUME_DATA__", resumeData);
+
+      // Call the second API to update other resume data
+      await updateResumeDetails(thumbnailLink, profilePreviewUrl);
+
+      toast.success("Resume updated successfully!");
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error uploading resume images:", error);
+      toast.error("Failed to upload images");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateResumeDetails = async (thumbnailLink, profilePreviewUrl) => {
+    try {
+      setIsLoading(true);
+
+      const response = await axiosInstance.put(
+        API_PATHS.RESUME.UPDATE_RESUME(resumeId),
+        {
+          ...resumeData,
+          thumbnailLink: thumbnailLink || "",
+          profileInfo: {
+            ...resumeData.profileInfo,
+            profilePreviewUrl: profilePreviewUrl || "",
+          },
+        }
+      )
+    } catch (error) {
+      console.error("Error capturing image", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Delete resume
   const handleDeleteResume = async () => {};
@@ -539,7 +600,7 @@ const EditResume = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* <div className="bg-white rounded-lg border border-purple-100 overflow-hidden">
+          <div className="bg-white rounded-lg border border-purple-100 overflow-hidden">
             <StepProgress progress={progress} />
 
             {renderForm()}
@@ -586,7 +647,7 @@ const EditResume = () => {
                 </button>
               </div>
             </div>
-          </div> */}
+          </div>
 
           <div ref={resumeRef} className="h-[100vh]">
             {/* Resume Template */}

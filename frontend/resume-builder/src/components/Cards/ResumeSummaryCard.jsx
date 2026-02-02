@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getLightColorFroomImage } from '../../utils/helper';
+import { getLightColorFromImage } from '../../utils/helper';
 
 const ResumeSummaryCard = ({ imgUrl, title, lastUpdated, onSelect }) => {
 
@@ -7,7 +7,7 @@ const ResumeSummaryCard = ({ imgUrl, title, lastUpdated, onSelect }) => {
 
     useEffect(() => {
         if(imgUrl) {
-            getLightColorFroomImage(imgUrl)
+            getLightColorFromImage(imgUrl)
                 .then((color) => {
                 setBgColor(color);
                 })

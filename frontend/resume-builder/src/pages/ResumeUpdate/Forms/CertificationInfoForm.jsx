@@ -30,6 +30,16 @@ const CertificationInfoForm = ({
                 />
 
                 <Input
+                  label="Issuer"
+                  placeholder="Coursera / Udemy"
+                  type="type"
+                  value={cert.issuer || ""}
+                  onChange={({ target }) => 
+                    updateArrayItem(index, "issuer", target.value)
+                  }
+                />
+
+                <Input
                   label="Year"
                   placeholder="2026"
                   type="text"
