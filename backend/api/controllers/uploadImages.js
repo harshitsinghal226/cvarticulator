@@ -1,6 +1,6 @@
 const cloudinary = require('../config/cloudinary');
 const Resume = require("../models/Resume");
-const upload = require("../middlewares/uploadMiddleware");
+const upload = require("../../middlewares/uploadMiddleware");
 
 const uploadResumeImages = async (req, res) => {
   try {
