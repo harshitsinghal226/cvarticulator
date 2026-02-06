@@ -10,10 +10,14 @@ const app = express();
 
 /* Middleware */
 app.use(cors({
-  origin: process.env.CLIENT_URL || "*",
+  origin: [
+    "https://cvarticulator.vercel.app",
+    "https://cvarticulator-*.vercel.app"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,8 +30,9 @@ app.get("/", (req, res) => {
   res.json({ ok: true, message: "API is alive" });
 });
 
-app.use("/auth", authRoutes);
-app.use("/resume", resumeRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/resume", resumeRoutes);
+
 
 /* 🚨 THIS IS THE CRITICAL PART 🚨 */
 const PORT = process.env.PORT || 8000;
