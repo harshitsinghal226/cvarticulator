@@ -142,11 +142,11 @@ const SignUp = ({ setCurrentPage }) => {
   };
 
   return (
-    <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center bg-white dark:bg-[#1C2330] rounded-2xl transition-colors">
+    <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center bg-white rounded-2xl transition-colors">
       {step === "signup" ? (
         <>
-          <h3 className="text-lg font-semibold text-black dark:text-gray-100">Create an Account</h3>
-          <p className="text-xs text-slate-700 dark:text-slate-300 mt-[5px] mb-6">
+          <h3 className="text-lg font-semibold text-[#2C3440]">Create an Account</h3>
+          <p className="text-xs text-slate-600 mt-[5px] mb-6">
             Join us today by entering your details below to create your account.
           </p>
 
@@ -185,11 +185,11 @@ const SignUp = ({ setCurrentPage }) => {
               {isLoading ? "Signing Up..." : "SIGN UP"}
             </button>
 
-            <p className="text-[13px] text-slate-800 dark:text-slate-300 mt-3">
+            <p className="text-[13px] text-slate-600 mt-3">
               Already have an account?{" "}
               <button
                 type="button"
-                className="font-medium text-primary dark:text-[#CDBFA5] underline cursor-pointer"
+                className="font-medium text-primary underline cursor-pointer"
                 onClick={() => {
                   setCurrentPage("login");
                 }}
@@ -204,15 +204,15 @@ const SignUp = ({ setCurrentPage }) => {
           <div className="flex items-center gap-3 mb-2">
             <button
               type="button"
-              className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-1 rounded-lg hover:bg-slate-100 transition-colors"
               onClick={() => setStep("signup")}
             >
-              <LuArrowLeft className="text-lg text-slate-700 dark:text-slate-300" />
+              <LuArrowLeft className="text-lg text-slate-700" />
             </button>
-            <h3 className="text-lg font-semibold text-black dark:text-gray-100">Verify Email</h3>
+            <h3 className="text-lg font-semibold text-[#2C3440]">Verify Email</h3>
           </div>
-          <p className="text-xs text-slate-700 dark:text-slate-300 mt-[5px] mb-6 leading-relaxed">
-            We've sent a 6-digit verification code to <strong className="text-black dark:text-white">{email}</strong>.
+          <p className="text-xs text-slate-600 mt-[5px] mb-6 leading-relaxed">
+            We've sent a 6-digit verification code to <strong className="text-black">{email}</strong>.
           </p>
 
           <form onSubmit={handleVerifyOTP}>
@@ -230,14 +230,14 @@ const SignUp = ({ setCurrentPage }) => {
               {isLoading ? "Verifying..." : "VERIFY EMAIL"}
             </button>
 
-            <div className="flex items-center justify-between text-[13px] text-slate-800 dark:text-slate-300 mt-4">
+            <div className="flex items-center justify-between text-[13px] text-slate-600 mt-4">
               <span>Didn't receive the code?</span>
               <button
                 type="button"
                 onClick={handleResendOTP}
                 disabled={resendTimer > 0}
                 className={`font-semibold cursor-pointer select-none ${
-                  resendTimer > 0 ? "text-slate-500" : "text-primary dark:text-[#CDBFA5] hover:underline"
+                  resendTimer > 0 ? "text-slate-500" : "text-primary hover:underline"
                 }`}
               >
                 {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend Code"}

@@ -76,25 +76,25 @@ const Dashboard = () => {
   return <DashboardLayout>
     <div className='grid grid-cols-1 md:grid-cols-4 gap-6 pt-1 pb-6 px-4 md:px-0'>
       <div 
-        className='h-[350px] flex flex-col gap-5 items-center justify-center bg-white/80 dark:bg-[#1C2330]/80 backdrop-blur-md rounded-2xl border-2 border-dashed border-[#9C8D7F]/50 dark:border-[#9C8D7F]/30 hover:border-[#9C8D7F] dark:hover:border-[#CDBFA5] hover:bg-[#CDBFA5]/5 dark:hover:bg-[#CDBFA5]/5 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer transition-all duration-300'
+        className='h-[350px] flex flex-col gap-5 items-center justify-center bg-white/80 backdrop-blur-md rounded-2xl border-2 border-dashed border-[#9C8D7F]/50 hover:border-[#9C8D7F] hover:bg-[#CDBFA5]/5 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer transition-all duration-300'
         onClick={() => setOpenCreateModal(true)}
       >
         <div className='w-16 h-16 flex items-center justify-center bg-gradient-to-br from-[#9C8D7F] to-[#CDBFA5] rounded-2xl shadow-lg'>
           <LuCirclePlus className='text-3xl text-white' />
         </div>
 
-        <h3 className='font-semibold text-[#2C3440] dark:text-gray-100 text-lg'>Add New Resume</h3>
+        <h3 className='font-semibold text-[#2C3440] text-lg'>Add New Resume</h3>
       </div>
 
       <div 
-        className='h-[350px] flex flex-col gap-5 items-center justify-center bg-white/80 dark:bg-[#1C2330]/80 backdrop-blur-md rounded-2xl border-2 border-dashed border-[#2C3440]/30 dark:border-slate-700 hover:border-[#2C3440] dark:hover:border-gray-300 hover:bg-[#2C3440]/5 dark:hover:bg-slate-700/10 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer transition-all duration-300'
+        className='h-[350px] flex flex-col gap-5 items-center justify-center bg-white/80 backdrop-blur-md rounded-2xl border-2 border-dashed border-[#2C3440]/30 hover:border-[#2C3440] hover:bg-[#2C3440]/5 hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer transition-all duration-300'
         onClick={() => dashboardFileRef.current?.click()}
       >
         <div className='w-16 h-16 flex items-center justify-center bg-gradient-to-br from-[#2C3440] to-[#434C5E] rounded-2xl shadow-lg'>
           <LuUpload className='text-3xl text-white' />
         </div>
 
-        <h3 className='font-semibold text-[#2C3440] dark:text-gray-100 text-lg'>Import PDF Resume</h3>
+        <h3 className='font-semibold text-[#2C3440] text-lg'>Import PDF Resume</h3>
         <input
           type="file"
           ref={dashboardFileRef}
@@ -110,12 +110,12 @@ const Dashboard = () => {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className='h-[350px] bg-white/60 dark:bg-[#1C2330]/60 backdrop-blur-md rounded-2xl border-2 border-[#CDBFA5]/20 dark:border-[#9C8D7F]/20 shadow-md animate-pulse'
+              className='h-[350px] bg-white/60 backdrop-blur-md rounded-2xl border-2 border-[#CDBFA5]/20 shadow-md animate-pulse'
             >
-              <div className='h-[250px] bg-[#CDBFA5]/10 dark:bg-slate-800/40 rounded-t-2xl' />
+              <div className='h-[250px] bg-[#CDBFA5]/10 rounded-t-2xl' />
               <div className='p-4 space-y-3'>
-                <div className='h-4 bg-[#CDBFA5]/20 dark:bg-slate-700/40 rounded w-3/4' />
-                <div className='h-3 bg-[#CDBFA5]/15 dark:bg-slate-700/30 rounded w-1/2' />
+                <div className='h-4 bg-[#CDBFA5]/20 rounded w-3/4' />
+                <div className='h-3 bg-[#CDBFA5]/15 rounded w-1/2' />
               </div>
             </div>
           ))}

@@ -54,9 +54,9 @@ const Login = ({ setCurrentPage }) => {
   }; 
 
   return (
-    <div className='w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center bg-white dark:bg-[#1C2330] rounded-2xl transition-colors'>
-      <h3 className='text-lg font-semibold text-black dark:text-gray-100'>Welcome Back</h3>
-      <p className='text-xs text-slate-700 dark:text-slate-300 mt-[5px] mb-6'>
+    <div className='w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center bg-white rounded-2xl transition-colors'>
+      <h3 className='text-lg font-semibold text-[#2C3440]'>Welcome Back</h3>
+      <p className='text-xs text-slate-600 mt-[5px] mb-6'>
         Please enter your details to login to your account.
       </p>
 
@@ -80,7 +80,7 @@ const Login = ({ setCurrentPage }) => {
         <div className='flex justify-end mb-2'>
           <button 
             type='button'
-            className='text-[12px] font-medium text-[#9C8D7F] hover:text-[#2C3440] dark:hover:text-[#CDBFA5] underline cursor-pointer transition-colors'
+            className='text-[12px] font-medium text-[#9C8D7F] hover:text-[#2C3440] underline cursor-pointer transition-colors'
             onClick={() => setCurrentPage("forgot-password")}
           >
             Forgot Password?
@@ -93,10 +93,10 @@ const Login = ({ setCurrentPage }) => {
           LOGIN
         </button>
 
-        <p className='text-[13px] text-slate-800 dark:text-slate-300 mt-3'>
+        <p className='text-[13px] text-slate-600 mt-3'>
           Don't have an account?{' '}
           <button 
-            className='font-medium text-primary dark:text-[#CDBFA5] underline cursor-pointer'
+            className='font-medium text-primary underline cursor-pointer'
             onClick={() => {
               setCurrentPage("signup");
             }}

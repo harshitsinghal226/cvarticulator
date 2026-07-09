@@ -3,16 +3,15 @@ import React, { createContext, useState, useEffect } from "react";
 export const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
+  const [theme] = useState("light");
 
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("dark");
-    localStorage.setItem("app-theme", "light");
   }, []);
 
   const toggleTheme = () => {
-    // Toggling disabled to keep application strictly in light mode
+    // Toggling disabled - strictly light mode
   };
 
   return (
