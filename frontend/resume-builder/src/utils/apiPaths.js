@@ -6,6 +6,10 @@ export const API_PATHS = {
     REGISTER: "/api/auth/register",  // Signup
     LOGIN: "/api/auth/login",         // Authenticate user & return JWT token
     GET_PROFILE: "/api/auth/profile", // Get logged-in user details
+    FORGOT_PASSWORD: "/api/auth/forgot-password", // Send reset email
+    RESET_PASSWORD: (token) => `/api/auth/reset-password/${token}`, // Reset password with token
+    VERIFY_OTP: "/api/auth/verify-otp",
+    RESEND_OTP: "/api/auth/resend-otp",
   },
 
   RESUME: {
@@ -15,6 +19,8 @@ export const API_PATHS = {
     UPDATE: (id) => `/api/resume/${id}`,    // PUT - Update a resume
     DELETE: (id) => `/api/resume/${id}`,    // DELETE - Delete a resume
     UPLOAD_IMAGES: (id) => `/api/resume/${id}/upload-images`, // PUT - Upload Thumbnail and Resume profile Images
+    PARSE_PDF: "/api/resume/parse-pdf",
+    GET_ATS_SCORE: (id) => `/api/resume/${id}/ats-score`,
   },
 
   IMAGE: {

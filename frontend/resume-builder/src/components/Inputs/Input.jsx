@@ -10,7 +10,7 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
 
   return (
     <div>
-      <label className="text-[13px] text-slate-800">{label}</label>
+      <label className="text-[13px] text-slate-800 dark:text-slate-200">{label}</label>
 
       <div className="input-box">
         <input

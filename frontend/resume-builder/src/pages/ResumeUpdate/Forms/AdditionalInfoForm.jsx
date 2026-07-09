@@ -17,7 +17,7 @@ const AdditionalInfoForm = ({
       {/* Languages Section */}
       <div className="mt-6">
         <h3 className="text-sm font-semibold text-gray-700">Languages</h3>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mt-2">
           {languages?.map((lang, index) => (
             <div 
               key={index} 

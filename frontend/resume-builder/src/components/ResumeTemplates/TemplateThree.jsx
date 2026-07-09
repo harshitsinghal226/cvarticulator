@@ -31,7 +31,22 @@ const Title = ({ text, color }) => {
   );
 };
 
-const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
+const ClickableSection = ({ children, sectionKey, onSectionClick }) => {
+  if (!onSectionClick) return children;
+  return (
+    <div
+      onClick={() => onSectionClick(sectionKey)}
+      className="group relative cursor-pointer rounded-lg transition-all duration-300 hover:bg-[#2C3440]/5 hover:ring-2 hover:ring-[#9C8D7F]/40 p-1.5 -m-1.5"
+    >
+      <span className="absolute -top-2.5 -right-1 hidden group-hover:flex items-center gap-1 bg-[#2C3440] text-white text-[9px] px-1.5 py-0.5 rounded shadow-md z-10 font-sans font-medium uppercase tracking-wider scale-90">
+        Edit
+      </span>
+      {children}
+    </div>
+  );
+};
+
+const TemplateThree = ({ resumeData, colorPalette, fontSize, containerWidth, onSectionClick }) => {
   const themeColors = colorPalette?.length > 0 ? colorPalette : DEFAULT_THEME;
 
   const resumeRef = useRef(null);
@@ -48,7 +63,7 @@ const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
   return (
     <div
       ref={resumeRef}
-      className="p-3 bg-white flex flex-col"
+      className={`p-3 bg-white flex flex-col resume-font-${fontSize || "medium"}`}
       style={{
         transform: containerWidth > 0 ? `scale(${scale})` : "none",
         transformOrigin: "top left",
@@ -56,199 +71,222 @@ const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
         minHeight: "297mm",
       }}
     >
-
       <div className="flex items-start gap-5 px-2 mb-5">
-        <div 
-          className="w-[100px] h-[100px] max-w-[105px] max-h-[105px] rounded-2xl flex items-center justify-center"
-          style={{ backgroundColor: themeColors[1] }}
-        >
-            {resumeData.profileInfo.profilePreviewUrl ? (
-                <img
-                  src={resumeData.profileInfo.profilePreviewUrl}
-                  className="w-[90px] h-[90px] rounded-2xl"
-                />
-            ) : (
-                <div
-                  className="w-[90px] h-[90px] flex items-center justify-center text-5xl rounded-full"
-                  style={{ color: themeColors[4]}}
-                >
-                    <LuUser />
-                </div>
-            )}
-        </div>
-
-        <div>
-            <div className="grid grid-cols-12 items-center">
-                <div className="col-span-8">
-                    <h2 className="text-2xl font-bold">
-                        {resumeData.profileInfo.fullName}
-                    </h2>
-                    <p className="text-[15px] font-semibold mb-2">
-                        {resumeData.profileInfo.designation}
-                    </p>
-
-                    <ContactInfo
-                      icon={<LuMapPinHouse />}
-                      iconBG={themeColors[2]}
-                      value={resumeData.contactInfo.location}
+        <ClickableSection sectionKey="profile-info" onSectionClick={onSectionClick}>
+          <div className="flex gap-5 items-start">
+            <div 
+              className="w-[100px] h-[100px] max-w-[105px] max-h-[105px] rounded-2xl flex items-center justify-center"
+              style={{ backgroundColor: themeColors[1] }}
+            >
+                {resumeData.profileInfo.profilePreviewUrl ? (
+                    <img
+                      src={resumeData.profileInfo.profilePreviewUrl}
+                      className="w-[90px] h-[90px] rounded-2xl"
+                      alt="Profile"
                     />
-                </div>
-
-                <div className="col-span-4 flex flex-col gap-5 mt-2">
-                    <ContactInfo
-                       icon={<LuMail />}
-                       iconBG={themeColors[2]}
-                       value={resumeData.contactInfo.email}
-                    />
-
-                    <ContactInfo
-                       icon={<LuPhone />}
-                       iconBG={themeColors[2]}
-                       value={resumeData.contactInfo.phone}
-                    />
-                </div>
+                ) : (
+                    <div
+                      className="w-[90px] h-[90px] flex items-center justify-center text-5xl rounded-full"
+                      style={{ color: themeColors[4]}}
+                    >
+                        <LuUser />
+                    </div>
+                )}
             </div>
-        </div>
+
+            <div>
+              <h2 className="text-xl font-bold mt-2">
+                {resumeData.profileInfo.fullName}
+              </h2>
+              <p className="text-sm font-semibold text-[#434C5E] mt-0.5">
+                {resumeData.profileInfo.designation}
+              </p>
+            </div>
+          </div>
+        </ClickableSection>
       </div>
 
-      <div className="grid grid-cols-12 gap-8 flex-1">
+      <div className="grid grid-cols-12 gap-8" style={{ minHeight: "calc(297mm - 7rem)" }}>
         <div
-          className="col-span-4 py-10"
+          className="col-span-4 rounded-xl p-4"
           style={{ backgroundColor: themeColors[0] }}
         >
-
-          <div className="my-6 mx-6">
-            <div className="flex flex-col gap-4">
-              {resumeData.contactInfo.linkedin && (
+          <div className="flex flex-col gap-4">
+            <ClickableSection sectionKey="contact-info" onSectionClick={onSectionClick}>
+              <div className="flex flex-col gap-4">
                 <ContactInfo
-                  icon={<RiLinkedinLine />}
+                  icon={<LuMapPinHouse />}
                   iconBG={themeColors[2]}
-                  value={resumeData.contactInfo.linkedin}
+                  value={resumeData.contactInfo.location}
                 />
-              )}
 
-              {resumeData.contactInfo.github && (
                 <ContactInfo
-                  icon={<LuGithub />}
+                  icon={<LuMail />}
                   iconBG={themeColors[2]}
-                  value={resumeData.contactInfo.github}
+                  value={resumeData.contactInfo.email}
                 />
-              )}
 
-              <ContactInfo
-                icon={<LuRss />}
-                iconBG={themeColors[2]}
-                value={resumeData.contactInfo.website}
-              />
-            </div>
-
-            <div className="mt-5">
-              <Title text="Education" color={themeColors[1]} />
-
-              {resumeData.education.map((data, index) => (
-                <EducationInfo
-                  key={`education_${index}`}
-                  degree={data.degree}
-                  institution={data.institution}
-                  duration={`${formatYearMonth(data.startDate)}-${formatYearMonth(data.endDate)}`}
+                <ContactInfo
+                  icon={<LuPhone />}
+                  iconBG={themeColors[2]}
+                  value={resumeData.contactInfo.phone}
                 />
-              ))}
-            </div>
 
-            <div className="mt-5">
-              <Title text="Languages" color={themeColors[1]} />
+                {resumeData.contactInfo.linkedin && (
+                  <ContactInfo
+                    icon={<RiLinkedinLine />}
+                    iconBG={themeColors[2]}
+                    value={resumeData.contactInfo.linkedin}
+                  />
+                )}
 
-              <LanguageSection
-                languages={resumeData.languages}
-                accentColor={themeColors[3]}
-                bgColor={themeColors[2]}
-              />
-            </div>
+                {resumeData.contactInfo.github && (
+                  <ContactInfo
+                    icon={<LuGithub />}
+                    iconBG={themeColors[2]}
+                    value={resumeData.contactInfo.github}
+                  />
+                )}
+
+                <ContactInfo
+                  icon={<LuRss />}
+                  iconBG={themeColors[2]}
+                  value={resumeData.contactInfo.website}
+                />
+              </div>
+            </ClickableSection>
+
+            {resumeData.education.length > 0 && (
+              <div className="mt-5">
+                <ClickableSection sectionKey="education-info" onSectionClick={onSectionClick}>
+                  <Title text="Education" color={themeColors[1]} />
+                  {resumeData.education.map((data, index) => (
+                    <EducationInfo
+                      key={`education_${index}`}
+                      degree={data.degree}
+                      institution={data.institution}
+                      duration={`${formatYearMonth(data.startDate)}-${formatYearMonth(data.endDate)}`}
+                    />
+                  ))}
+                </ClickableSection>
+              </div>
+            )}
+
+            {resumeData.languages.length > 0 && (
+              <div className="mt-5">
+                <ClickableSection sectionKey="additionalInfo" onSectionClick={onSectionClick}>
+                  <Title text="Languages" color={themeColors[1]} />
+                  <LanguageSection
+                    languages={resumeData.languages}
+                    accentColor={themeColors[3]}
+                    bgColor={themeColors[2]}
+                  />
+                </ClickableSection>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="col-span-8 pt-10 mr-10 pb-5">
-          <div>
-            <Title text="Professional Summary" color={themeColors[1]} />
-            <p className="text-sm font-medium">
-              {resumeData.profileInfo.summary}
-            </p>
-          </div>
+        <div className="col-span-8 pr-5 pb-5">
+          {resumeData.profileInfo.summary && (
+            <ClickableSection sectionKey="profile-info" onSectionClick={onSectionClick}>
+              <div>
+                <Title text="Professional Summary" color={themeColors[1]} />
+                <p className="text-sm font-medium">
+                  {resumeData.profileInfo.summary}
+                </p>
+              </div>
+            </ClickableSection>
+          )}
 
-          <div className="mt-4">
-            <Title text="Work Experience" color={themeColors[1]} />
+          {resumeData.workExperience.length > 0 && (
+            <div className="mt-4">
+              <ClickableSection sectionKey="work-experience" onSectionClick={onSectionClick}>
+                <Title text="Work Experience" color={themeColors[1]} />
+                {resumeData.workExperience.map((data, index) => (
+                  <WorkExperience
+                    key={`work_${index}`}
+                    company={data.company}
+                    role={data.role}
+                    duration={`${formatYearMonth(data.startDate)} - ${formatYearMonth(data.endDate)}`}
+                    durationColor={themeColors[4]}
+                    description={data.description}
+                  />
+                ))}
+              </ClickableSection>
+            </div>
+          )}
 
-            {resumeData.workExperience.map((data, index) => (
-              <WorkExperience
-                key={`work_${index}`}
-                company={data.company}
-                role={data.role}
-                duration={`${formatYearMonth(data.startDate)} - ${formatYearMonth(data.endDate)}`}
-                durationColor={themeColors[4]}
-                description={data.description}
-              />
-            ))}
-          </div>
+          {resumeData.projects.length > 0 && (
+            <div className="mt-4">
+              <ClickableSection sectionKey="projects" onSectionClick={onSectionClick}>
+                <Title text="Projects" color={themeColors[1]} />
+                {resumeData.projects.map((project, index) => (
+                  <ProjectInfo
+                    key={`project_${index}`}
+                    title={project.title}
+                    description={project.description}
+                    githubLink={project.github}
+                    liveDemoUrl={project.liveDemo}
+                    bgColor={themeColors[2]}
+                  />
+                ))}
+              </ClickableSection>
+            </div>
+          )}
 
-          <div className="mt-4">
-            <Title text="Projects" color={themeColors[1]} />
-
-            {resumeData.projects.map((project, index) => (
-              <ProjectInfo
-                key={`project_${index}`}
-                title={project.title}
-                description={project.description}
-                githubLink={project.github}
-                liveDemoUrl={project.liveDemo}
-                bgColor={themeColors[2]}
-              />
-            ))}
-          </div>
-
-          <div className="mt-4">
-            <Title text="Skills" color={themeColors[1]} />
-
-            <SkillSection
-              skills={resumeData.skills}
-              accentColor={themeColors[3]}
-              bgColor={themeColors[2]}
-            />
-          </div>
-
-          <div className="mt-4">
-            <Title text="Certifications" color={themeColors[1]} />
-
-            <div className="grid grid-cols-1 gap-2">
-              {resumeData.certifications.map((data, index) => (
-                <CertificationInfo
-                  key={`cert_${index}`}
-                  title={data.title}
-                  issuer={data.issuer}
-                  year={data.year}
+          {resumeData.skills.length > 0 && (
+            <div className="mt-4">
+              <ClickableSection sectionKey="skills" onSectionClick={onSectionClick}>
+                <Title text="Skills" color={themeColors[1]} />
+                <SkillSection
+                  skills={resumeData.skills}
+                  accentColor={themeColors[3]}
                   bgColor={themeColors[2]}
                 />
-              ))}
+              </ClickableSection>
             </div>
-          </div>
+          )}
 
-          {resumeData.interests.length > 0 && resumeData.interests[0] != "" && (
+          {resumeData.certifications.length > 0 && (
             <div className="mt-4">
-              <Title text="Interests" color={themeColors[1]} />
+              <ClickableSection sectionKey="certifications" onSectionClick={onSectionClick}>
+                <Title text="Certifications" color={themeColors[1]} />
+                <div className="grid grid-cols-1 gap-2">
+                  {resumeData.certifications.map((data, index) => (
+                    <CertificationInfo
+                      key={`cert_${index}`}
+                      title={data.title}
+                      issuer={data.issuer}
+                      year={data.year}
+                      bgColor={themeColors[2]}
+                    />
+                  ))}
+                </div>
+              </ClickableSection>
+            </div>
+          )}
 
-              <div className="flex items-center flex-wrap gap-3 mt-4">
-                {resumeData.interests.map((interest, index) => {
-                  if (!interest) return null;
-                  return (
-                    <div
-                      key={`interest_${index}`}
-                      className="text-[10px] font-medium py-1 px-3 rounded-lg"
-                      style={{ backgroundColor: themeColors[2] }}
-                    >
-                      {interest}
-                    </div>
-                  );
-                })}
-              </div>
+          {resumeData.interests.length > 0 && resumeData.interests[0] !== "" && (
+            <div className="mt-4">
+              <ClickableSection sectionKey="additionalInfo" onSectionClick={onSectionClick}>
+                <Title text="Interests" color={themeColors[1]} />
+
+                <div className="flex items-center flex-wrap gap-3 mt-4">
+                  {resumeData.interests.map((interest, index) => {
+                    if (!interest) return null;
+                    return (
+                      <div
+                        key={`interest_${index}`}
+                        className="text-[10px] font-medium py-1 px-3 rounded-lg"
+                        style={{ backgroundColor: themeColors[2] }}
+                      >
+                        {interest}
+                      </div>
+                    );
+                  })}
+                </div>
+              </ClickableSection>
             </div>
           )}
         </div>

@@ -17,6 +17,7 @@ const ResumeSchema = new mongoose.Schema(
         template: {
             theme: String,
             colorPalette: [String],
+            fontSize: { type: String, default: "medium" },
         },
         profileInfo: {
             profilePreviewUrl: String,
@@ -77,6 +78,15 @@ const ResumeSchema = new mongoose.Schema(
             },
         ],
         interests: [String],
+        atsScoreCache: {
+            score: Number,
+            improvements: [String],
+            buzzwordsFound: [String],
+            actionVerbsRecommended: [String],
+            isAiScored: Boolean,
+            contentHash: String,
+            updatedAt: Date
+        }
     },
     { 
         timestamps: {createdAt: 'createdAt', updatedAt: 'updatedAt' },

@@ -15,8 +15,7 @@ const uploadResumeImages = async (req, res) => {
             .json({ message: "File upload failed", error: err.message });
         }
 
-        console.log("Files received:", req.files);
-        console.log("Resume ID:", req.params.id);
+
         
         const resumeId = req.params.id;
         const resume = await Resume.findOne({
@@ -67,7 +66,7 @@ const uploadResumeImages = async (req, res) => {
 
         await resume.save();
 
-        console.log("Upload successful! Thumbnail:", resume.thumbnailLink, "Profile:", resume.profileInfo?.profilePreviewUrl);
+
 
         res.status(200).json({
           message: "Images uploaded successfully",
